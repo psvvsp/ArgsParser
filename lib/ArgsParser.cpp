@@ -1,5 +1,6 @@
 #include "ArgsParser.h"
 #include <cassert>
+using namespace ap;
 
 ArgsParser::ArgsParser(const string& path, const string& annotation)
     : m_path(path), m_annotation(annotation)

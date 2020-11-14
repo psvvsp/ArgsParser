@@ -4,22 +4,27 @@
 
 #include <sstream>
 
-class Converter
+namespace ap
 {
-public:
-    template<class T>
-    static string toString(const T& t)
-    {
-        std::ostringstream out;
-        out << t;
-        return out.str();
-    }
 
-    template<class T>
-    static bool fromString(const string& str, T& t)
+    class Converter
     {
-        std::istringstream in(str);
-        in >> t;
-        return !!in;
-    }
-};
+    public:
+        template<class T>
+        static string toString(const T& t)
+        {
+            std::ostringstream out;
+            out << t;
+            return out.str();
+        }
+
+        template<class T>
+        static bool fromString(const string& str, T& t)
+        {
+            std::istringstream in(str);
+            in >> t;
+            return !!in;
+        }
+    };
+
+} // namespace ap

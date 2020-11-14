@@ -16,7 +16,7 @@ public:
     public:
         const T &value() const { return m_option->value(); }
     private:
-        ::Option<T> *m_option;
+        ap::Option<T> *m_option;
         friend class ArgsParser;
     };
 
@@ -26,7 +26,7 @@ public:
     public:
         const T& value() const { return m_argument->value(); }
     private:
-        ::Argument<T> *m_argument;
+        ap::Argument<T> *m_argument;
         friend class ArgsParser;
     };
 
@@ -43,7 +43,7 @@ public:
     )
     {
         Option<T> result;
-        result.m_option = new ::Option<T>(
+        result.m_option = new ap::Option<T>(
             shortOption,
             longOption,
             argumentName,
@@ -63,7 +63,7 @@ public:
     )
     {
         Option<bool> result;
-        result.m_option = new ::Option<bool>(
+        result.m_option = new ap::Option<bool>(
             shortOption,
             longOption,
             annotation);
@@ -93,7 +93,7 @@ public:
         }
 
         Argument<T> result;
-        result.m_argument = new ::Argument<T>(
+        result.m_argument = new ap::Argument<T>(
             argumentName,
             annotation,
             defaultValue,
@@ -118,6 +118,6 @@ private:
     string m_path;
     string m_annotation;
 
-    vector<unique_ptr<AbstractOption>> m_options;
-    vector<unique_ptr<AbstractArgument>> m_arguments;
+    vector<unique_ptr<ap::AbstractOption>> m_options;
+    vector<unique_ptr<ap::AbstractArgument>> m_arguments;
 };

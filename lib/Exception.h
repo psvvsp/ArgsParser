@@ -2,9 +2,14 @@
 
 #include <exception>
 
-class Exception : public std::exception
+namespace ap
 {
-public:
-    using std::exception::exception;
 
-};
+    class Exception : public std::exception
+    {
+    public:
+        using std::exception::exception;
+
+    };
+
+} // namespace ap

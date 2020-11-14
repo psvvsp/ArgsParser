@@ -4,45 +4,50 @@
 #include "Converter.h"
 #include "Exception.h"
 
-template<class T>
-class Argument : public AbstractArgument
+namespace ap
 {
-public:
-    Argument(
-        const string& argumentName,
-        const string& annotation,
-        const T& defaultValue,
-        const bool optional,
-        const function<bool(const T&)>& validator
-    )
-        : AbstractArgument(
-            argumentName,
-            annotation,
-            Converter::toString(defaultValue),
-            optional)
-        , m_value(defaultValue)
-        , m_validator(validator)
-    {}
 
-    void convert(const string& arg) override
+    template<class T>
+    class Argument : public AbstractArgument
     {
-        if (!Converter::fromString(arg, m_value)) {
-            string error = "failed to convert \""
-                + arg + "\" to \"" + typeid(T).name() + "\""
-                + " (argument \"" + argumentName() + "\")";
-            throw Exception(error.c_str());
-        }
-        if (!m_validator(m_value)) {
-            string error = "failed to validate \""
-                + Converter::toString(m_value)
-                + "\" (argument \"" + argumentName() + "\")";
-            throw Exception(error.c_str());
-        }
-    }
+    public:
+        Argument(
+            const string& argumentName,
+            const string& annotation,
+            const T& defaultValue,
+            const bool optional,
+            const function<bool(const T&)>& validator
+        )
+            : AbstractArgument(
+                argumentName,
+                annotation,
+                Converter::toString(defaultValue),
+                optional)
+            , m_value(defaultValue)
+            , m_validator(validator)
+        {}
 
-    const T& value() const { return m_value; }
+        void convert(const string& arg) override
+        {
+            if (!Converter::fromString(arg, m_value)) {
+                string error = "failed to convert \""
+                    + arg + "\" to \"" + typeid(T).name() + "\""
+                    + " (argument \"" + argumentName() + "\")";
+                throw Exception(error.c_str());
+            }
+            if (!m_validator(m_value)) {
+                string error = "failed to validate \""
+                    + Converter::toString(m_value)
+                    + "\" (argument \"" + argumentName() + "\")";
+                throw Exception(error.c_str());
+            }
+        }
 
-private:
-    T m_value;
-    function<bool(const T&)> m_validator;
-};
+        const T& value() const { return m_value; }
+
+    private:
+        T m_value;
+        function<bool(const T&)> m_validator;
+    };
+
+} // namespace ap
