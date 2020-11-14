@@ -34,3 +34,5 @@
 # VS files
 *.user
 */x64/*
+.vs/*
+/x64
